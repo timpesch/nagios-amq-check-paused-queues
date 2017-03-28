@@ -1,24 +1,10 @@
 #!/bin/bash
 
-########################################################################################################
+##############################################################
 #
-# Manual / Simple Nagios Plugin For Checking Queue Status
+# Configuration
 #
-# Sample execution:
-# ./check_amq_paused_queues.sh user password queuename
-#
-# $1 == Username
-# $2 == Password
-# $3 == Queuename
-#
-# Example to integrate in NRPE:
-#
-# command[check_queuename]=/path/to/check_amq_paused_queues.sh user password queuename
-#
-#
-# Questions to Tim Pesch
-#
-########################################################################################################
+##############################################################
 
 AMQHOST="localhost"
 HTTPPORT="8181"
