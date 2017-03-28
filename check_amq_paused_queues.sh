@@ -20,10 +20,13 @@
 #
 ########################################################################################################
 
+AMQHOST="localhost"
+HTTPPORT="8181"
+BROKERNAME="amq"
 
 # Getting lines short, setting Broker-Name
+JOLOKIA="/hawtio/jolokia/read/org.apache.activemq:type=Broker,brokerName=$BROKERNAME"
 
-HAWTIO="/hawtio/jolokia/read/org.apache.activemq:type=Broker,brokerName=amq"
 
 
 # QA check if all parameters are passed to the script
@@ -37,7 +40,7 @@ fi
 
 # QA Check for valid creds and if queue exists
 
-if ! curl -s -u $1:$2 "http://localhost:8181$HAWTIO,destinationType=Queue,destinationName=$3/Name" | grep \"value\"\:\"$3\" >/dev/null;
+if ! curl -s -u $1:$2 "http://$AMQHOST:$HTTPPORT$JOLOKIA,destinationType=Queue,destinationName=$3/Name" | grep \"value\"\:\"$3\" >/dev/null;
 	then
 		echo "Unknown - Check Queuename or Credentials"
 		exit 3
@@ -46,7 +49,7 @@ fi
 
 # Check if queue is paused
 
-if curl -s -u $1:$2 "http://localhost:8181$HAWTIO,destinationType=Queue,destinationName=$3/Paused" | grep "\"value\"\:false\," >/dev/null;
+if curl -s -u $1:$2 "http://$AMQHOST:$HTTPPORT$JOLOKIA,destinationType=Queue,destinationName=$3/Paused" | grep "\"value\"\:false\," >/dev/null;
 	then
 		echo "OK - Queue is running"
 		exit 0
